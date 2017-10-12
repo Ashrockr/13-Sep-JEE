@@ -1,62 +1,115 @@
- //step 1: One package declaration
-package com.cpegemini.trainee;
+package com.capgemini.lab3_1;
 
-import com.capgemini.date.MyDate;
+import java.util.Scanner;
 
-//step 2: none or many import statements
-/**
- * @author apathak8
- *
- */
-//step 3 :public class
-public class trainee {
-     //step 4: private instance variables
-	 //step 5: getters & setters in order to access private data outside the class
-   private int traineeId;
-   private String firstName;
-   private String lastName;
-   private long phoneNo;
-   private String email;
-   private MyDate dob;
-   //has -a relationship/containment
-   //object of other class as member of our class
-   //step 6: static member variable
-  private static String coName;
-  //single copy per class 
-  private static int numId;
-  //for auto-generating ID
- //step 7:static block
-  //used to initialize only static variable
-  //invoke before constructor 
-//static initializer block-will be executed only 
-  static{
-	  System.out.println("static block invoked");
-	  numId=1000+(int)(Math.random()*123.123);
-	  coName="Capgemini India Pvt. Ltd.";
-	  //auto genrated id;
-  }
-  {
-	  System.out.println("init block invoked");
+public class StringOperation {
 
-}
-  public trainee() {
-	// TODO Auto-generated constructor stub
-}
-  @Override
-public String toString() {
-	return "trainee [traineeId=" + traineeId + ", firstName=" + firstName
-			+ ", lastName=" + lastName + ", phoneNo=" + phoneNo + ", email="
-			+ email + ", dob=" + dob + "]";
-}
-public trainee( String firstName,String lastName,long phoneNo,String email, MyDate dob) {
-  System.out.println("Overloaded constructor of Trainee");
-  //remove trainee id
-  this.firstName = firstName;
-  this.lastName = lastName;
-  this.phoneNo = phoneNo;
-  this.email = email;
-  this.dob = dob;
-  
-  }
+	static Scanner scan = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		int option;
+		String str = "Ashish";
+		do {
+			System.out.print(
+					  "\n__________________________________________________"
+					+ "\n    String Operation                 "
+					+ "\n__________________________________________________"
+					+ "\n    Enter your option                             "
+					+ "\n 1. Display the string                              "
+					+ "\n 2. Add the string to itself                      "
+					+ "\n 3. Replace odd positon with #                    "
+					+ "\n 4. Remove duplicate characters in the string     "
+					+ "\n 5. Change odd characters to uppercase            "
+					+ "\n 6. Exit                                          "
+					+ "\n__________________________________________________"
+					+ "\n Option: "
+					);
+			option = scan.nextInt();
+			switch (option) {
+			case 1:
+				displayString(str);
+				break;
+			case 2:
+				str = addString(str);
+				break;
+			case 3:
+				str = replaceOddPosition(str, '#');
+				break;
+			case 4:
+				str = removeDuplicate(str);
+				break;
+			case 5:
+				str = changeOddToUpper(str);
+				break;
+			case 6:
+				exit();
+				break;
+			default:
+				System.out
+				.println("\nPlease select the correct option (1-6) only.");
+				break;
+			}
+		} while (true);
+
+	}
+
+	private static String changeOddToUpper(String str) {
+		StringBuilder strB = new StringBuilder();
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (i % 2 != 0) {
+				strB.append(String.valueOf(c).toUpperCase());
+			} else {
+				strB.append(String.valueOf(c));
+			}
+		}
+		return strB.toString();
+	}
+
+	private static String removeDuplicate(String str) {
+		String strUnique = "";
+		for (int i = 0; i < str.length(); i++) {
+			Boolean found = false;
+			for (int j = 0; j < strUnique.length(); j++) {
+				if (str.charAt(i) == strUnique.charAt(j)) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				strUnique = strUnique.concat(String.valueOf(str.charAt(i)));
+			}
+		}
+		return strUnique;
+
+	}
+
+	private static String replaceOddPosition(String str, char c) {
+		String str1 = "";
+		for (int i = 0; i < str.length(); i++) {
+			if (i % 2 != 0) {
+				str1=str1.concat(String.valueOf(c));
+			} else {
+				str1=str1.concat(String.valueOf(str.charAt(i)));
+			}
+		}
+		return str1;
+	}
+
+	private static String addString(String str) {
+		str = str.concat(str);
+		return str;
+	}
+
+	private static void displayString(String str) {
+		System.out.println(" String  : " + str);
+	}
+
+	private static void exit() {
+		System.out.println(" Exitted!!");
+		scan.close();
+		System.exit(1);
+
+	}
 
 }
